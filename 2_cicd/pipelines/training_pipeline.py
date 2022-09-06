@@ -26,9 +26,3 @@ def pipeline(label_column: str, test_size=0.2):
         },
         outputs=['model']
     )
-    
-    # Deploy the model as a serverless function
-    deploy = mlrun.deploy_function(
-        "deploy-model",
-        models=[{"key": "model", "model_path": train.outputs["model"]}]
-    )

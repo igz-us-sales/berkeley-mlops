@@ -1,7 +1,7 @@
 kind: project
 metadata:
   name: berkeley-mlops
-  created: '2022-09-06T16:57:10.214000+00:00'
+  created: '2022-09-06T20:56:24.657000+00:00'
 spec:
   functions:
   - url: functions/get_data.py
@@ -12,8 +12,6 @@ spec:
     name: train-model
     kind: job
     image: mlrun/mlrun
-  - url: hub://v2_model_server
-    name: deploy-model
   workflows:
   - name: train
     path: pipelines/training_pipeline.py
