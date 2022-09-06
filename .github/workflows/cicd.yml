@@ -6,15 +6,6 @@ jobs:
     if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, '/run') && ${{ github.actor }} == "nschenone"
     runs-on: ubuntu-latest
     environment: 'prod'
-    container:
-      image: mlrun/mlrun:1.0.4
-      env:
-        V3IO_USERNAME: ${{ secrets.V3IO_USERNAME }}
-        V3IO_API: ${{ secrets.V3IO_API }}
-        V3IO_ACCESS_KEY: ${{ secrets.V3IO_ACCESS_KEY }}
-        MLRUN_DBPATH: ${{ secrets.MLRUN_DBPATH }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        CMD: ${{ github.event.comment.body}}
 
     steps:
     - uses: actions/checkout@v2
@@ -24,8 +15,15 @@ jobs:
         python-version: '3.7'
         architecture: 'x64'
     
-    #- name: Install mlrun
-    #  run: python -m pip install pip install mlrun
+    - name: Install mlrun
+      run: python -m pip install pip install mlrun
       
     - name: Submit project
-      run: python -m mlrun project ./2_cicd --watch --run $(CMD:5)
+      run: python -m mlrun project ./2_cicd --watch --run ${CMD:5}
+      env:
+        V3IO_USERNAME: ${{ secrets.V3IO_USERNAME }}
+        V3IO_API: ${{ secrets.V3IO_API }}
+        V3IO_ACCESS_KEY: ${{ secrets.V3IO_ACCESS_KEY }}
+        MLRUN_DBPATH: ${{ secrets.MLRUN_DBPATH }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        CMD: ${{ github.event.comment.body}}
