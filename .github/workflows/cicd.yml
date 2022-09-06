@@ -28,4 +28,4 @@ jobs:
     #  run: python -m pip install pip install mlrun
       
     - name: Submit project
-      run: python -m mlrun project ./2_cicd --watch --run ${CMD:5}
+      run: python -m mlrun project ./2_cicd --watch --run $(CMD:5)
